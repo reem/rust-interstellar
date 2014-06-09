@@ -37,7 +37,7 @@ impl Particle for PlainParticle {
   #[inline]
   fn acc(&self) -> Vector { self.acc }
   #[inline]
-  fn from_vectors(p: Vector, v: Vector, a: Vector) -> PlainParticle{
+  fn from_vectors(p: Vector, v: Vector, a: Vector) -> PlainParticle {
     PlainParticle { pos: p, vel: v, acc: a }
   }
 }
