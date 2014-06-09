@@ -32,3 +32,12 @@ impl Particle for PlainParticle {
     return PlainParticle { pos: p, vel: v, acc: a }
   }
 }
+
+impl Drawable for PlainParticle {
+  #[inline]
+  fn drawpos(&self) -> Vector { self.pos }
+  #[inline]
+  fn color(&self) -> Color { Color(255, 255, 255, 0) } 
+  #[inline]
+  fn size(&self) -> uint { 1 }
+}
