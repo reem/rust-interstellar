@@ -8,9 +8,12 @@
 //! A fast 2d particle physics library for simple and pretty
 //! simulations.
 
-pub mod draw;
+extern crate graphics;
+extern crate piston;
+
+pub mod vector;
+pub mod particle;
 pub mod field;
 pub mod emitter;
-pub mod particle;
-pub mod vector;
 pub mod state;
+pub mod draw;
