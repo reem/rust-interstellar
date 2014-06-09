@@ -20,3 +20,17 @@ impl Field for Gravity {
     particle.acc().fastAdd(xDiff * force, yDiff * force);
   }
 }
+
+impl Drawable for Gravity {
+  #[inline(always)]
+  fn drawpos(&self) -> Vector { return self.pos; }
+  fn color(&self) -> Color {
+    if self.mass > 0f64 {
+      return Color(255, 0, 0, 0);
+    } else {
+      return Color(0, 255, 0, 0);
+    }
+  }
+  #[inline(always)]
+  fn size(&self) -> uint { return 4; }
+}
