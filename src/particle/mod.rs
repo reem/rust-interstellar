@@ -2,15 +2,18 @@ use super::vector::Vector;
 use super::draw::{Drawable, Color};
 
 pub trait Particle {
-  fn pos<'a>(&'a mut self) -> &'a mut Vector;
-  fn vel<'a>(&'a mut self) -> &'a mut Vector;
-  fn acc<'a>(&'a mut self) -> &'a mut Vector;
-  fn fromVectors(p: Vector, v: Vector, a: Vector) -> Self;
+  fn pos_mut<'a>(&'a mut self) -> &'a mut Vector;
+  fn vel_mut<'a>(&'a mut self) -> &'a mut Vector;
+  fn acc_mut<'a>(&'a mut self) -> &'a mut Vector;
+  fn pos(& self) -> Vector;
+  fn vel(& self) -> Vector;
+  fn acc(& self) -> Vector;
+  fn from_vectors(p: Vector, v: Vector, a: Vector) -> Self;
   fn move(&mut self) {
-    let acc = *self.acc();
-    self.vel().mut_add(&acc);
-    let vel = *self.vel();
-    self.pos().mut_add(&vel);
+    let acc = self.acc();
+    self.vel_mut().mut_add(&acc);
+    let vel = self.vel();
+    self.pos_mut().mut_add(&vel);
   }
 }
 
@@ -22,14 +25,20 @@ pub struct PlainParticle {
 
 impl Particle for PlainParticle {
   #[inline]
-  fn pos<'a>(&'a mut self) -> &'a mut Vector { return &mut self.pos; }
+  fn pos_mut<'a>(&'a mut self) -> &'a mut Vector { &mut self.pos }
   #[inline]
-  fn vel<'a>(&'a mut self) -> &'a mut Vector { return &mut self.vel; }
+  fn vel_mut<'a>(&'a mut self) -> &'a mut Vector { &mut self.vel }
   #[inline]
-  fn acc<'a>(&'a mut self) -> &'a mut Vector { return &mut self.acc; }
+  fn acc_mut<'a>(&'a mut self) -> &'a mut Vector { &mut self.acc }
+  #[inline]
+  fn pos(&self) -> Vector { self.pos }
+  #[inline]
+  fn vel(&self) -> Vector { self.vel }
+  #[inline]
+  fn acc(&self) -> Vector { self.acc }
   #[inline]
   fn from_vectors(p: Vector, v: Vector, a: Vector) -> PlainParticle{
-    return PlainParticle { pos: p, vel: v, acc: a }
+    PlainParticle { pos: p, vel: v, acc: a }
   }
 }
 

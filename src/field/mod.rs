@@ -17,7 +17,7 @@ impl Field for Gravity {
     let yDiff = self.pos.x - particle.pos().y;
     let force = self.mass / (xDiff.powf(2f64) + yDiff.powf(2f64)).powf(1.5);
 
-    particle.acc().fastAdd(xDiff * force, yDiff * force);
+    particle.acc_mut().fast_add(xDiff * force, yDiff * force);
   }
 }
 
