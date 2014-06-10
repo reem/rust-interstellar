@@ -1,11 +1,11 @@
+use graphics::*; // Shadows Field
+use piston::{Game, Gl, RenderArgs, UpdateArgs};
+
 use super::vector::Vector;
 use super::state::State;
 use super::particle::Particle;
 use super::field::Field;
 use super::emitter::Emitter;
-
-use graphics::*;
-use piston::{Game, Gl, RenderArgs, UpdateArgs};
 
 pub struct Color(pub uint, pub uint, pub uint, pub uint);
 
