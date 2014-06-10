@@ -9,11 +9,11 @@ pub trait Emitter<P: Particle> {
 }
 
 pub struct StreamEmitter {
-  pos: Vector,
-  direction: f64,
-  ppf: uint,
-  startVel: f64,
-  spread: f64
+  pub pos: Vector,
+  pub direction: f64,
+  pub ppf: uint,
+  pub startVel: f64,
+  pub spread: f64
 }
 
 impl Emitter<PlainParticle> for StreamEmitter {
@@ -22,10 +22,10 @@ impl Emitter<PlainParticle> for StreamEmitter {
       Particle::from_vectors(
         self.pos,
         Vector::from_angle(
-          self.startVel * random::<f64>(), 
-          self.spread - (random::<f64>() * self.spread * 2f64) + self.direction
+          self.startVel * (random::<f64>() + 0.3), 
+          self.spread - (random::<f64>() * self.spread * 2.0) + self.direction
         ),
-        Vector { x: 0f64, y: 0f64}
+        Vector { x: 0.0, y: 0.0}
       )
     }).collect()
   }
