@@ -25,7 +25,7 @@ impl Emitter<PlainParticle> for StreamEmitter {
                     self.startVel * (random::<f64>() + 0.3), 
                     self.spread - (random::<f64>() * self.spread * 2.0) + self.direction
                 ),
-                Vector { x: 0.0, y: 0.0}
+                Vector::new(0.0, 0.0)
             )
         }).collect()
     }

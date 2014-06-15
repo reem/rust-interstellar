@@ -25,7 +25,7 @@ impl<F: Field, P: Particle, E: Emitter<P>> State<F, P, E> {
         }
 
         for particle in self.particles.mut_iter() {
-            *particle.acc_mut() = Vector { x: 0f64, y: 0f64 };
+            *particle.acc_mut() = Vector::new(0.0, 0.0);
             for field in self.fields.iter() {
                 field.affect(particle);
             }

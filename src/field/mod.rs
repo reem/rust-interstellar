@@ -13,12 +13,11 @@ pub struct Gravity {
 
 impl Field for Gravity {
     fn affect<P: Particle>(&self, particle: &mut P) -> () {
-        let xDiff = self.pos.x - particle.pos().x;
-        let yDiff = self.pos.x - particle.pos().y;
+        let (xDiff, yDiff) = (self.pos - particle.pos()).as_tuple();
         let force =
             self.mass / (xDiff.powf(2f64) + yDiff.powf(2f64)).powf(1.5);
 
-        particle.acc_mut().fast_add(xDiff * force, yDiff * force);
+        particle.acc_mut().mut_add(&Vector::new(xDiff, yDiff).scale(force));
     }
 }
 
