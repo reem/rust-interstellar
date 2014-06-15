@@ -1,5 +1,5 @@
 use graphics::*; // Shadows Field
-use piston::{Game, Gl, RenderArgs, UpdateArgs};
+use piston::*;
 
 use super::vector::Vector;
 use super::state::State;
@@ -19,9 +19,10 @@ fn draw<D: Drawable>(c: &Context, gl: &mut Gl, d: &D) {
     let drawpos = d.drawpos();
     match d.color() {
         Color(r, g, b, _) => {
+            let (drawX, drawY) = drawpos.as_tuple();
             c.ellipse(
-                drawpos.x,
-                drawpos.y,
+                drawX,
+                drawY,
                 d.size() as f64,
                 d.size() as f64)
                 .rgb(r as f32, g as f32, b as f32)
@@ -46,5 +47,43 @@ impl<F: Drawable + Field,
     }
     fn update(&mut self, _args: UpdateArgs) {
         self.step();
+    }
+
+    fn run<W: GameWindow>(
+        &mut self,
+        game_window: &mut W,
+        asset_store: &mut AssetStore
+    ) {
+        let mut game_iter = GameIterator::new(
+            game_window,
+            &GameIteratorSettings {
+                updates_per_second: 30,
+                max_frames_per_second: 30
+            });
+
+        self.load(asset_store);
+
+        loop {
+            match game_iter.next() {
+                None => { break }
+                Some(e) => match e {
+                    Render(args) => self.render(
+                        &Context::abs(
+                            args.width as f64,
+                            args.height as f64
+                        ),
+                        args
+                    ),
+                    Update(args) => self.update(args),
+                    KeyPress(args) => self.key_press(args),
+                    KeyRelease(args) => self.key_release(args),
+                    MousePress(args) => self.mouse_press(args),
+                    MouseRelease(args) => self.mouse_release(args),
+                    MouseMove(args) => self.mouse_move(args),
+                    MouseRelativeMove(args) => self.mouse_relative_move(args),
+
+                }
+            }
+        }
     }
 }
